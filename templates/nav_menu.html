@@ -1,0 +1,21 @@
+<header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+        <h1><a href="{% url 'main_page' %}"><span></span></a></h1>
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                {% for m in menu %}
+                    <li><a class="nav-link scrollto active" href="{{ m.href }}">{{ m.text }}</a></li>
+                {% endfor %}
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </div>
+</header>
+
+<div class="carousel-container">
+    <div class="container">
+      <h2 class="animate__animated animate__fadeInDown"><span>{{ welcome.0 }}</span></h2>
+      <p class="animate__animated animate__fadeInUp">{{ welcome.1 }}</p>
+    </div>
+</div>

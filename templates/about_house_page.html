@@ -1,0 +1,69 @@
+{% extends "index.html" %}
+{% load Novi_Sad_house_tags %}
+{% block content %}
+
+{% top_contacts %}
+
+{% include 'header.html' %}
+
+  <main id="main">
+
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+        <div class="row gy-4">
+          <section id="hero">
+            <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+              <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+              <div class="carousel-inner" role="listbox">
+                    {% for k in d.houseimage_set.all %}
+                        {% if forloop.first %}
+                            <div class="carousel-item active">
+                              <div class="carousel-container">
+                                <div class="container">
+                                    <a href="{{ k.image.url }}"><img class="d-block w-100" src="{{ k.image.url }}"></a>
+                                </div>
+                              </div>
+                            </div>
+                        {% else %}
+                            <div class="carousel-item">
+                              <div class="carousel-container">
+                                <div class="container">
+                                    <a href="{{ k.image.url }}"><img class="d-block w-100" src="{{ k.image.url }}"></a>
+                                </div>
+                              </div>
+                            </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+
+              <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+              </a>
+
+              <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+              </a>
+
+            </div>
+          </section>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h2>Информация о доме:</h2>
+              <br>
+                  {% include 'house_info.html' %}
+            </div>
+          </div>
+          <h2>Описание дома:</h2>
+            <p>
+              {{ d.desc }}
+            </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  {% bottom_contacts %}
+{% endblock content %}
+

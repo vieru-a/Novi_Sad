@@ -1,0 +1,96 @@
+{% extends "list_houses.html" %}
+{% load Novi_Sad_house_tags %}
+{% block content %}
+
+{% top_contacts %}
+
+{% include 'header.html' %}
+
+      {% block search %}
+      <form class="house_filter" method="get">
+        {{ filter.form.as_p }}
+        <button type="submit">Search</button>
+      </form>
+      {% endblock search %}
+
+      {% include 'list_houses.html' %}
+
+      {% block pagination %}
+        <div class="wrapper">
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+            {% if page_obj.has_other_pages %}
+            {% if min_price or max_price or ordering %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page=1&min_price={{ min_price }}&max_price={{ max_price }}&ordering={{ ordering }}">&lt&lt</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&min_price={{ min_price }}&max_price={{ max_price }}&ordering={{ ordering }}">&lt</a>
+                        </li>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                        <li class="page-item">
+                        <a class="page-link active">{{ p }}</a>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ p }}&min_price={{ min_price }}&max_price={{ max_price }}&ordering={{ ordering }}">{{ p }}</a>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&min_price={{ min_price }}&max_price={{ max_price }}&ordering={{ ordering }}">&gt</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&min_price={{ min_price }}&max_price={{ max_price }}&ordering={{ ordering }}">&gt&gt</a>
+                        </li>
+                    {% endif %}
+                </ul>
+              </nav>
+            {% else %}
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page=1">&lt&lt</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lt</a>
+                        </li>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                        <li class="page-item">
+                        <a class="page-link active">{{ p }}</a>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">&gt</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&gt&gt</a>
+                        </li>
+                    {% endif %}
+                </ul>
+              </nav>
+              {% endif %}
+            {% endif %}
+            </ul>
+          </nav>
+        </div>
+     {% endblock pagination %}
+    {% bottom_contacts %}
+  {% endblock content %}
+
+
+

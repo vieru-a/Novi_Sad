@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+{% load Novi_Sad_house_tags %}
+{% block content %}
+
+<main id="main">
+    <section id="services" class="services">
+    <div class="container">
+
+      <div class="section-title">
+        <h2> Недвижимость </h2>
+        <p>Представляем наиболее актуальную информацию о недвижимости в городе Нови Сад и его окрестностях. Мы готовы помочь вам с подбором вариантов, устроить он-лайн просмотр выбранного варианта, а также помочь со всеми юридическими тонкостями сделки. С полным списком недвижимости Вы можете ознакомиться перейдя по <a href="{% url 'list_houses_page'%}"><strong>ссылке.</strong></a></p>
+      </div>
+          <div>
+
+          </div>
+          <div class="row">
+
+          {% block search %}
+
+          {% endblock search %}
+
+            {% for d in data %}
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch" >
+                <div class="icon-box">
+                  <div>
+                        <p><a href="{{ d.get_absolute_url }}"><img src="{{ d.houseimage_set.all.0.image.url }}"
+                          width="350" height="290" alt="изображение не найдено"></a></p>
+                  </div>
+                  <br>
+                  {% include 'house_info.html' %}
+                </div>
+              </div>
+            {% endfor %}
+           {% block pagination %}
+
+           {% endblock pagination %}
+          </div>
+        </div>
+      </section>
+    </main>
+{% endblock content %}

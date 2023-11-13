@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load Novi_Sad_house_tags %}
+
+{% block content %}
+
+<!-- navigation bar -->
+ <section id="hero1">
+    <div id="heroCarousel">
+        <div class="carousel-item active" style="background-image: url({% static 'assets/img/slide/fon.jpg' %})">
+            {% nav_menu %}
+        </div>
+      </div>
+  </section>
+  <!-- end navigation bar -->
+
+  {% top_contacts %}
+
+  {% include 'list_houses.html' %}
+
+  {% about_us %}
+
+  {% about_serbia %}
+
+  {% for_russians %}
+
+  {% help_section %}
+
+  {% bottom_contacts %}
+
+{% endblock content %}
