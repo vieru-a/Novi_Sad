@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 
 def get_slug(slug, model):
@@ -42,13 +43,17 @@ class House(models.Model):
 
 
 class HouseImage(models.Model):
-    name = models.CharField(max_length=255, verbose_name='Название фото')
     house = models.ForeignKey('House', on_delete=models.PROTECT, verbose_name='Дом')
-    image = models.ImageField(upload_to=f'new_data/%Y/%m/%d', verbose_name='Изображение')
-    default = models.BooleanField(default=False)
+    image = models.ImageField(upload_to=f'new_data/%Y/%m/%d', verbose_name='Файл')
+    default = models.BooleanField(default=False, verbose_name='Превью фото дома')
 
     def __str__(self):
         return f'{self.image}'
+
+    def get_html_photo(self):
+        return mark_safe(f"<a href='{self.image.url}'><img src='{self.image.url}' width=150")
+
+    get_html_photo.short_description = 'Фото'
 
     class Meta:
         verbose_name = 'Фото дома'

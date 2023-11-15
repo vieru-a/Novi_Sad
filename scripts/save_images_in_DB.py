@@ -37,7 +37,6 @@ def run():
                 f.write(image_data)
             # сохраняем фотографию в базу данных, связываем фотографию с домом
             house_image = HouseImage(
-                name=f'{number}',
                 house=house_from_db,
                 image=f'{house_from_db.slug}/1920x1080_fit_0_{number}.jpg',
                 default=default_status
