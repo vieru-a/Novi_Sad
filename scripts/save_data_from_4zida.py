@@ -51,8 +51,10 @@ def run():
                     # нас интересуют только: адрес, цена, площадь, кол-во комнат, описание, структура, фото и цена/кв.метр
                     if k in check_list:
                         # при наличии описания и структуры переводим на русский
-                        if k in check_list[4] or k in check_list[5]:
+                        if v != '' and k in check_list[4] or k in check_list[5]:
                             house_dic[k] = translator.translate(v, dest='ru', src='sr').text
+                        elif v == '':
+                            house_dic[k] = 'Нет данных'
                         else:
                             house_dic[k] = v
 
