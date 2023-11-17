@@ -1,16 +1,15 @@
 from pathlib import Path
 
+from django.core.cache import cache
 from django.views.generic import ListView, DetailView
 from django_filters.views import FilterView
 
 from .filters import HouseFilter
 from .models import *
 
-import os
 import random
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-houses_count = len(os.listdir(BASE_DIR / f'templates/static/assets/media'))
 
 
 class MainPage(ListView):
@@ -24,8 +23,12 @@ class MainPage(ListView):
         return context
 
     def get_queryset(self):
-        random_houses = random.sample(range(1, houses_count), 9)
-        return House.objects.filter(pk__in=random_houses, is_published=True).prefetch_related("houseimage_set")
+        queryset = cache.get('data_for_filter')
+        if not queryset:
+            queryset = House.objects.filter(is_published=True).prefetch_related("houseimage_set")
+            cache.set('data_for_filter', queryset, 3600)
+        li = random.sample(range(1, len(queryset)), 9)
+        return [queryset[i] for i in li]
 
 
 class ListHouses(FilterView):
