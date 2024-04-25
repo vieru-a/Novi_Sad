@@ -10,7 +10,6 @@
 
 - python 3.11
 - Django 4.2.4
-- SQLite 3.43.0
 - MySQL
 
 ## Разработчики
